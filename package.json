@@ -10,6 +10,7 @@
   },
   "homepage": "https://calmhand.github.io/weather-app",
   "dependencies": {
+    "bootstrap": "^5.2.0-beta1",
     "core-js": "^3.8.3",
     "gh-pages": "^4.0.0",
     "vue": "^3.2.13"
