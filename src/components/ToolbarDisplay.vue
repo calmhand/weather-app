@@ -1,17 +1,16 @@
 <template>
     <div class="display-toolbar">
         <div class="title-search-container">
-            <!-- <h2 id="title-header">My Weather</h2> -->
             <img class="title-img" src="../assets/sun.png"/>
             <br/>
             <br/>
-            <form name="search-form" @submit="test()" onsubmit="return false">
+            <form name="search-form" @submit="submitCity()" onsubmit="return false">
                 <SearchBar/>
                 <br/>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
-
+        <div id="api-usage">Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a></div>
         <Footer />
     </div>
 </template>
@@ -31,8 +30,15 @@
             Footer
         },
         methods: {
-            
+            getCity() {
+                return document.getElementById('search-bar').value
+            },
+            submitCity() {
+                // console.log(this.getCity());
+                this.$emit('getLocation', this.getCity())
+            },
         },
+        emits: ['getLocation']
     }
 </script>
 
@@ -68,6 +74,10 @@
     }
 
     .title-search-container {
-        margin: 37vh auto;
+        margin: 35vh auto;
+    }
+
+    #api-usage {
+        color: beige;
     }
 </style>

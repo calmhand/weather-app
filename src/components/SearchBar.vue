@@ -12,7 +12,7 @@
     export default {
         data() {
             return {
-                placeHolderLocations: [
+                cities: [
                     "London", "New York", "Los Angeles",
                     "Paris", "Phoenix", "Atlanta",
                     "Berlin", "Barcelona", "Rome",
@@ -21,7 +21,7 @@
                     "San Francisco", "Las Vegas", "Philadelphia"
                 ],
                 placeHolderCounter: 0,
-                placeHolderAnimate: '',
+                placeHolderAnimate: null,
             }
         },
         methods: {
@@ -32,10 +32,10 @@
             getNextCity() {
                 if (this.placeHolderCounter != 17) {
                     this.placeHolderCounter++
-                    return this.placeHolderLocations[(this.placeHolderCounter)]
+                    return this.cities[(this.placeHolderCounter)]
                 } else {
                     this.placeHolderCounter = 0
-                    return this.placeHolderLocations[(this.placeHolderCounter)]
+                    return this.cities[(this.placeHolderCounter)]
                 }
             },
              async animatePlaceholder() {
