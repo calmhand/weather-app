@@ -1,48 +1,58 @@
 <!-- notes -->
 <!-- 
-    Weather Info To Display:
-    Name of city
-    Temperature: Current, High, Low
-    Condition: Sunny, Cloudy, Slightly Cloudy, etc
-    Humidity
-    Air Quality
-    UV Index
+    
  -->
 <template>
     <div class="display-container">
         <div class="display-weather">
-            <LocationHeader v-if="this.isLoaded" 
-            :place="this.location" 
-            :country="this.country"
-            :region="this.region"/>
+            <transition>
+                <LocationHeader v-if="this.isLoaded" 
+                :place="this.location" 
+                :country="this.country"
+                :region="this.region"/>
+            </transition>
 
-            <WeatherInfo v-if="this.isLoaded" 
-            name="Condition" 
-            :str_value="this.condition"/>
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="Condition" 
+                :str_value="this.condition"/>
+            </transition>
+
+
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="Air Quality" 
+                :num_value="this.airQuality"/>
+            </transition>
             
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="Humidity" 
+                :num_value="this.humidity"
+                unit_value="%"/>
+            </transition>
 
-            <WeatherInfo v-if="this.isLoaded" 
-            name="Air Quality" 
-            :num_value="this.airQuality"/>
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="Temperature" 
+                :num_value="this.temperature"
+                unit_value=" °F"/>
+            </transition>
+
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="Wind Speed" 
+                :num_value="this.windSpd"
+                unit_value=" mph"/>
+            </transition>
             
-            <WeatherInfo v-if="this.isLoaded" 
-            name="Humidity" 
-            :num_value="this.humidity"/>
+            <transition>
+                <WeatherInfo v-if="this.isLoaded" 
+                name="UV Index" 
+                :num_value="this.UVIndex"/>
+            </transition>
 
-            <WeatherInfo v-if="this.isLoaded" 
-            name="Temperature" 
-            :num_value="this.temperature"/>
-
-            <WeatherInfo v-if="this.isLoaded" 
-            name="Wind Speed" 
-            :num_value="this.windSpd"/>
-            
-            <WeatherInfo v-if="this.isLoaded" 
-            name="UV Index" 
-            :num_value="this.UVIndex"/>
-
-            <img id="icon" v-if="this.isLoaded" :src="this.icon"/>
-
+            <transition><img id="icon" v-if="this.isLoaded" :src="this.icon"/></transition>
         </div>
         <Toolbar @get-location="((city)=>run(city))"/>
     </div>
@@ -83,8 +93,16 @@
                 return this.API_URL + place
             },
             async run(place) {
-                await this.fetchWeather(this.getAPI(place))
-                this.parseData()
+                if (this.isLoaded) {
+                    this.isLoaded = false
+                    await this.fetchWeather(this.getAPI(place))
+                    setTimeout(()=>this.parseData(), 1000) // for css (goofy fix but whatever)
+                    this.sunWarning()
+                } else {
+                    await this.fetchWeather(this.getAPI(place))
+                    this.parseData()
+                    this.sunWarning()
+                }
             },
             parseData() {
                this.location = this.locationData["name"]
@@ -107,6 +125,9 @@
                     this.locationData = data.location
                     console.log(data); // delete later
                 })
+            },
+            sunWarning() {
+                console.log(this.$refs.UV.innerText)
             },
         },
     }
@@ -136,4 +157,17 @@
         width: 100px;
     }
 
+    .v-enter-active {
+        transition: all 2.5s ease-out;
+    }
+
+    .v-leave-active {
+        transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 </style>
