@@ -66,6 +66,11 @@
     export default {
         data() {
             return {
+                CLOUD_IMG:"https://media0.giphy.com/media/qMa7c1HPdN7rO/giphy.gif",
+                RAIN_IMG: "https://s-media-cache-ak0.pinimg.com/originals/91/2a/2a/912a2a3e04f3099b700d09a8d351ac6d.gif",
+                SNOW_IMG: "https://64.media.tumblr.com/62046c4b6db824973a063782f8b08ddb/1de13aef03064f7e-24/s540x810/f3133611fc8e87c44f124f7af5b346d434ed1bd1.gifv",
+                STORM_IMG: "https://thumbs.gfycat.com/LiquidLeanDairycow-size_restricted.gif",
+                SUNNY_IMG: "https://thumbs.gfycat.com/FrenchSecondaryEnglishpointer-max-1mb.gif",
                 API_URL: "https://api.weatherapi.com/v1/current.json?key=eba659c2c78e47aa8c0182048222106&aqi=yes&q=",
                 isLoaded: false,
                 toggleTemp: false, // false - farenheit; true - celcius
@@ -97,11 +102,13 @@
                     this.isLoaded = false
                     await this.fetchWeather(this.getAPI(place))
                     setTimeout(()=>this.parseData(), 1000) // for css (goofy fix but whatever)
+                    // this.changeToolbar()
                     this.sunWarning()
                 } else {
                     await this.fetchWeather(this.getAPI(place))
                     this.parseData()
-                    this.sunWarning()
+                    // this.changeToolbar()
+                    // this.sunWarning()
                 }
             },
             parseData() {
@@ -116,6 +123,7 @@
                this.UVIndex = this.weatherData["uv"]
                this.humidity = this.weatherData["humidity"]
                this.isLoaded = true
+               this.changeToolbar()
             },
             async fetchWeather(url) {
                 return fetch(url)
@@ -123,12 +131,25 @@
                 .then((data) => {
                     this.weatherData = data.current
                     this.locationData = data.location
-                    console.log(data); // delete later
+                    console.log(data); // TODO delete later
                 })
             },
             sunWarning() {
-                console.log(this.$refs.UV.innerText)
+                // console.log(this.$refs.UV.innerText)
             },
+            changeToolbar() {
+                document.getElementById('display-toolbar').style.backgroundImage=`url(${this.getImage()})`;
+            },
+            getImage() {
+                if (this.condition.includes("Partly") || this.condition.includes("Sunny")) {
+                    return this.SUNNY_IMG
+                } else if (this.condition.includes("rain")) {
+                    return this.RAIN_IMG
+                } else if (this.condition.includes("cloud") || this.condition.includes("Mist")) {
+                    return this.CLOUD_IMG
+                }
+            }
+            
         },
     }
 </script>
@@ -137,7 +158,9 @@
     .display-container {
         display: grid;
         height: 100vh;
+
         grid-template-columns: 70% 30%;
+        grid-template-areas: "weather" "search";
         column-gap: 1px;
         overflow: hidden;
     }
@@ -148,7 +171,6 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(3, 1fr);
-
     }
 
     #icon {
@@ -169,5 +191,12 @@
     .v-leave-to {
         transform: translateY(20px);
         opacity: 0;
+    }
+
+    @media only screen and (max-width:550px) {
+        .display-container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }
     }
 </style>

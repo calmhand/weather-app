@@ -1,5 +1,5 @@
 <template>
-    <div class="display-toolbar">
+    <div id="display-toolbar">
         <div class="title-search-container">
             <img class="title-img" src="../assets/sun.png"/>
             <br/>
@@ -48,10 +48,15 @@
         width: 50px;
     }
 
-    .display-toolbar {
+    #display-toolbar {
         background-image: url('../assets/toolbar-bg.gif') ;
         background-size: cover;
         text-align: center;
+        opacity: 1;
+    }
+
+    #display-toolbar::before {
+        transition: opacity 1 1s;
     }
 
     .btn {
