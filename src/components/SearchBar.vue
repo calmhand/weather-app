@@ -62,6 +62,7 @@
     #search-bar {
         height: 25px;
         width: 300px;
+        margin: 15px 0px 20px 0px;
         border: 1px solid grey;
         border-radius: 25px;
         outline: none;

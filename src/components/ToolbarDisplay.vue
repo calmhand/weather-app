@@ -2,11 +2,11 @@
     <div id="display-toolbar">
         <div class="title-search-container">
             <img class="title-img" src="../assets/sun.png"/>
-            <br/>
-            <br/>
+            <!-- <br/> -->
+            <!-- <br/> -->
             <form name="search-form" @submit="submitCity()" onsubmit="return false">
                 <SearchBar/>
-                <br/>
+                <!-- <br/> -->
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
@@ -43,6 +43,7 @@
 </script>
 
 <style scoped>
+
     .title-img {
         height: 50px;
         width: 50px;
@@ -50,13 +51,11 @@
 
     #display-toolbar {
         background-image: url('../assets/toolbar-bg.gif') ;
-        background-size: cover;
+        background-size: 100vw 100vh;
+        background-repeat: no-repeat;
         text-align: center;
-        opacity: 1;
-    }
-
-    #display-toolbar::before {
-        transition: opacity 1 1s;
+        overflow: hidden;
+        transition: background-image 2s ease-in-out;
     }
 
     .btn {

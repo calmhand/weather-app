@@ -102,12 +102,10 @@
                     this.isLoaded = false
                     await this.fetchWeather(this.getAPI(place))
                     setTimeout(()=>this.parseData(), 1000) // for css (goofy fix but whatever)
-                    // this.changeToolbar()
                     this.sunWarning()
                 } else {
                     await this.fetchWeather(this.getAPI(place))
                     this.parseData()
-                    // this.changeToolbar()
                     // this.sunWarning()
                 }
             },
@@ -157,17 +155,16 @@
 <style scoped>
     .display-container {
         display: grid;
-        height: 100vh;
-
         grid-template-columns: 70% 30%;
+        grid-template-rows: none;
         grid-template-areas: "weather" "search";
         column-gap: 1px;
+        height: 100vmax;
         overflow: hidden;
     }
 
     .display-weather {
-        background-color: black;
-        width: 100%;
+        background-image: linear-gradient(rgb(0, 81, 202), darkblue);
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(3, 1fr);
