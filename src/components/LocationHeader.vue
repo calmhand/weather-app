@@ -18,7 +18,6 @@
 
 <style scoped>
     .place-text {
-        color: beige;
         text-align: center;
         margin: auto;
         grid-column: 1/3;

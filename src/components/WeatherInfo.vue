@@ -1,5 +1,5 @@
 <template>
-    <div class="weather-info">
+    <div id="weather-info">
         <h2 class="info-title">{{name}}</h2>
         <h4 class="info-styles">{{num_value}}{{unit_value}}</h4>
         <h4 v-if="num_value==null" class="info-styles">{{str_value}}{{unit_value}}</h4>
@@ -21,8 +21,7 @@
 </script>
 
 <style>
-    .weather-info{
-        color: beige;
+    #weather-info {
         text-align: center;
         margin: auto;
     }

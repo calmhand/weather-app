@@ -2,11 +2,8 @@
     <div id="display-toolbar">
         <div class="title-search-container">
             <img class="title-img" src="../assets/sun.png"/>
-            <!-- <br/> -->
-            <!-- <br/> -->
             <form name="search-form" @submit="submitCity()" onsubmit="return false">
                 <SearchBar/>
-                <!-- <br/> -->
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
@@ -34,7 +31,6 @@
                 return document.getElementById('search-bar').value
             },
             submitCity() {
-                // console.log(this.getCity());
                 this.$emit('getLocation', this.getCity())
             },
         },
@@ -50,12 +46,13 @@
     }
 
     #display-toolbar {
+        transition: background-image 2s ease-in-out;
         background-image: url('../assets/toolbar-bg.gif') ;
-        background-size: 100vw 100vh;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
+        border-left: 1px solid white;
         text-align: center;
         overflow: hidden;
-        transition: background-image 2s ease-in-out;
     }
 
     .btn {
