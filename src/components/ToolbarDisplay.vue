@@ -28,9 +28,11 @@
         },
         methods: {
             getCity() {
+                scroll(0,0)
                 return document.getElementById('search-bar').value
             },
             submitCity() {
+                document.getElementById('search-bar').inputMode = "none"
                 this.$emit('getLocation', this.getCity())
             },
         },
@@ -80,5 +82,24 @@
 
     #api-usage {
         color: beige;
+    }
+
+    @media (min-width: 320px) and (max-width: 480px) {
+        .title-search-container {
+            margin: 35px 0 10px 0;
+        }
+
+        #display-toolbar {
+            position: absolute;
+            top: 60%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow-x: hidden;
+            border: none;
+            border-top: 1px solid white;
+            height: 100%;
+            min-height: 900px;
+        }
     }
 </style>

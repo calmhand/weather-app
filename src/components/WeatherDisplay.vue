@@ -259,10 +259,15 @@
         opacity: 0;
     }
 
-    @media only screen and (max-width:550px) {
+    /* mobile view */
+    @media (min-width: 320px) and (max-width: 480px) {
         .display-container {
-            grid-template-columns: 1fr;
-            grid-template-rows: 1fr;
+            overflow: hidden;
+            /* display: grid; */
+            grid-template-columns: 100%;
+            grid-template-rows: 60vh 40vh;
+            height: 100%;
+            min-height: 100%;
         }
     }
 </style>

@@ -2,7 +2,8 @@
     <div>
         <input id="search-bar" 
         type="text" placeholder="Enter Location" 
-        @click="pauseAnimation()" 
+        inputmode="search"
+        @click="pauseAnimation()"
         @blur="animatePlaceholder()"
         required/>
     </div>
@@ -28,6 +29,7 @@
             pauseAnimation() {
                 clearInterval(this.placeHolderAnimate)
                 document.getElementById('search-bar').placeholder = ""
+                document.getElementById('search-bar').inputMode = "search"
             },
             getNextCity() {
                 if (this.placeHolderCounter != 17) {
@@ -39,6 +41,7 @@
                 }
             },
              async animatePlaceholder() {
+                document.getElementById('search-bar').inputMode = "none"
                 if (document.getElementById('search-bar').placeholder == "") {
                     document.getElementById('search-bar').placeholder = "Enter Location"
                 } else {
@@ -61,7 +64,7 @@
 <style scoped>
     #search-bar {
         height: 25px;
-        width: 300px;
+        width: 250px;
         margin: 15px 0px 20px 0px;
         border: 1px solid grey;
         border-radius: 25px;
