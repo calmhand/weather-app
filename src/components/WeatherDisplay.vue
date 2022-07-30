@@ -116,6 +116,10 @@
                this.isLoaded = true
                this.changeToolbar()
             },
+            /**
+             * Calls Weather API and retrieves information about the entered
+             * location.
+             */
             async fetchWeather(url) {
                 return fetch(url)
                 .then((res) => {
@@ -129,16 +133,22 @@
                     this.weatherData = data.current
                     this.locationData = data.location
                     this.parseData()
-                    console.log(data); // TODO delete later
                 })
                 .catch((err) => {
                     console.log(err)
                     alert(err)
                 })
             },
+            /**
+             * Changes the images of the toolbar based on time and weather of location.
+             */
             changeToolbar() {
                 document.getElementById('display-toolbar').style.backgroundImage=`url(${this.getImage()})`;
             },
+            /**
+             * Alters gradient colors of weather display and returns the
+             * images based on time and weather of location.
+             */
             getImage() {
                 if (this.condition.includes("Partly") || this.condition.includes("Sunny") || this.condition.includes("Clear"))  {
                     this.changeGradient("sunny")
@@ -157,6 +167,10 @@
                     return this.isDay ? this.SNOW_IMG : this.NIGHT_SNOW_IMG
                 }
             },
+            /**
+             * Changes color of gradient on the weather display based
+             * on time of location.
+             */
             changeGradient(c) {
                 switch (c) {
                     case "sunny":
@@ -214,6 +228,33 @@
                         break;
                 }
             },
+        },
+        /**
+         * Browser will ask the user to allowance to use
+         * the user's current location.
+         * This hook affects the app's ability to preload the user's
+         * current location.
+         */
+        beforeMount() {
+            const gps = navigator.geolocation
+            gps.getCurrentPosition((pos) => {
+                // on success
+                let curLocation = pos.coords.latitude + " + " + pos.coords.longitude
+                console.log(pos.coords.latitude);
+                console.log(pos.coords.longitude);
+                this.run(curLocation)
+            },
+            () => {
+                // on failure
+                console.log("Unable to preload location due to permissions.");
+            },
+            {
+                // options
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            })
+            
         },
     }
 </script>
