@@ -133,7 +133,6 @@
                     this.weatherData = data.current
                     this.locationData = data.location
                     this.parseData()
-                    console.log(data);
                 })
                 .catch((err) => {
                     console.log(err)
