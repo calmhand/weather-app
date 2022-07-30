@@ -233,6 +233,8 @@
         /**
          * This hook affects the app's ability to preload the user's
          * current location.
+         * The string being passed will call the Weather API and get the user's
+         * IP address.
          */
         beforeMount() {
             this.run("auto:ip")
